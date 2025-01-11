@@ -1,224 +1,214 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Random 4U</title>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/css/bootstrap.min.css">
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.min.css">
+  <title>Menfess Message</title>
+  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" integrity="sha512-Fo3rlrZj/k7ujTnH2N2ZZmvC55gODojJ7XEtuoPSa0nE9BG3iVFSsaIGkpIkekpP06vffvMQpdmX1xG2A0QlYw==" crossorigin="anonymous" referrerpolicy="no-referrer" />
   <style>
-    /* Tampilan riwayat pesan */
-    #history {
-      display: none; /* Hidden by default */
-      position: fixed;
-      top: 20px;
-      right: 20px;
-      max-height: 400px;
-      overflow-y: auto;
-      background: rgba(0, 0, 0, 0.6);
-      color: #fff;
-      padding: 15px;
-      border-radius: 12px;
-      font-family: 'Arial', sans-serif;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
-    }
-    #history div {
-      margin-bottom: 15px;
-      font-size: 16px;
-      border-left: 5px solid #50C8FF;
-      padding-left: 10px;
-      transition: background-color 0.3s ease;
-    }
-    #history div:hover {
-      background-color: rgba(80, 200, 255, 0.1);
-    }
-
-    /* Style form */
-    .form-container {
-      max-width: 700px;
-      margin: 50px auto;
-      padding: 30px;
-      background: #f3f6f9;
-      border-radius: 15px;
-      box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+    body {
       font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      margin: 0;
+      padding: 0;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
+      color: #fff;
+      position: relative;
     }
-    .form-container h2 {
+
+    .form-container {
+      background: rgba(255, 255, 255, 0.9);
+      padding: 25px;
+      border-radius: 12px;
+      box-shadow: 0 8px 15px rgba(0, 0, 0, 0.2);
+      width: 90%;
+      max-width: 400px;
       text-align: center;
+    }
+
+    .form-container h2 {
+      font-size: 1.8rem;
       margin-bottom: 20px;
-      color: #4C6EF5;
+      color: #333;
     }
 
-    .form-container input, .form-container textarea {
-      border: 2px solid #d4d9e0;
-      border-radius: 8px;
-      padding: 12px;
-      width: 100%;
-      font-size: 14px;
-      transition: border-color 0.3s ease;
-    }
-    .form-container input:focus, .form-container textarea:focus {
-      border-color: #50C8FF;
-      outline: none;
-    }
-
-    .btn-primary {
-      background-color: #50C8FF;
-      border-color: #50C8FF;
-      padding: 12px 25px;
-      border-radius: 8px;
+    .form-container label {
+      display: block;
+      margin-bottom: 8px;
       font-weight: bold;
-      transition: background-color 0.3s ease, border-color 0.3s ease;
-    }
-    .btn-primary:hover {
-      background-color: #48a9e6;
-      border-color: #48a9e6;
+      color: #555;
+      text-align: left;
     }
 
-    /* Ikon history */
-    #history-toggle {
-      position: fixed;
-      top: 20px;
-      left: 20px;
-      background-color: #50C8FF;
+    .form-container input,
+    .form-container textarea,
+    .form-container button {
+      width: 100%;
+      padding: 12px 15px;
+      margin-bottom: 15px;
+      border: 1px solid #ccc;
+      border-radius: 6px;
+      font-size: 1rem;
+      box-sizing: border-box;
+    }
+
+    .form-container input:focus,
+    .form-container textarea:focus {
+      outline: none;
+      border-color: #6a11cb;
+      box-shadow: 0 0 5px rgba(106, 17, 203, 0.5);
+    }
+
+    .form-container button {
+      background: linear-gradient(135deg, #6a11cb, #2575fc);
       color: white;
-      padding: 12px;
-      border-radius: 50%;
-      font-size: 18px;
-      box-shadow: 0 6px 15px rgba(0, 0, 0, 0.2);
+      border: none;
+      font-size: 1.1rem;
+      font-weight: bold;
       cursor: pointer;
+      transition: background 0.3s ease;
     }
 
-    /* Ikon tutup riwayat */
-    #history-close {
+    .form-container button:hover {
+      background: linear-gradient(135deg, #2575fc, #6a11cb);
+    }
+
+    footer {
+      margin-top: auto;
+      background: rgba(0, 0, 0, 0.8);
+      color: #fff;
+      text-align: center;
+      padding: 10px 0;
+      width: 100%;
+      font-size: 0.9rem;
+      position: absolute;
+      bottom: 0;
+      left: 0;
+    }
+
+    footer a {
+      color: #6a11cb;
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    footer a:hover {
+      text-decoration: underline;
+    }
+
+    .history-icon {
       position: absolute;
       top: 10px;
       right: 10px;
-      background: transparent;
-      border: none;
-      font-size: 18px;
-      color: #fff;
+      width: 50px;
+      height: 50px;
       cursor: pointer;
     }
 
-    /* Responsiveness */
-    @media (max-width: 576px) {
-      #history {
-        max-width: 90%;
-        right: 10px;
-        top: 10px;
-        padding: 10px;
-      }
-      .form-container {
-        width: 90%;
-        padding: 20px;
-      }
-    }
   </style>
 </head>
 <body>
-  <!-- Ikon untuk menampilkan Riwayat -->
-  <div id="history-toggle">
-    <i class="bi bi-clock"></i> <!-- Menggunakan ikon jam dari Bootstrap Icons -->
-  </div>
+  <img src="history.png" alt="History" class="history-icon" onclick="viewHistory()">
 
-  <!-- Riwayat Pesan -->
-  <div id="history">
-    <button id="history-close">&times;</button>
-  </div>
-
-  <!-- Form Menfess -->
   <div class="form-container">
-    <h2>Terserah</h2>
-    <form id="menfess-form" action="https://formspree.io/f/xeoopdoe" method="POST">
-      <div class="mb-3">
-        <label for="name" class="form-label">Nama (Opsional)</label>
-        <input type="text" id="name" class="form-control" name="name" placeholder="Masukkan nama kamu (opsional)">
-      </div>
-      <div class="mb-3">
-        <label for="message" class="form-label">Pesan</label>
-        <textarea id="message" class="form-control" name="message" rows="4" placeholder="Tulis pesan kamu" required></textarea>
-      </div>
-      <button type="submit" class="btn btn-primary">Kirim Pesan</button>
+    <h2>Menfess Message</h2>
+    <form id="anonymousForm">
+      <label for="recipient">To (Name)</label>
+      <input type="text" id="recipient" name="recipient" placeholder="Enter recipient's name" required>
+
+      <label for="phone">To (Phone Number)</label>
+      <input type="text" id="phone" name="phone" placeholder="Enter recipient's phone number" required>
+
+      <label for="message">Your Message</label>
+      <textarea id="message" name="message" rows="4" placeholder="Type your message here" required></textarea>
+
+      <button type="submit">Send Message</button>
     </form>
   </div>
 
-  <!-- SweetAlert2 -->
-  <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11.0.16/dist/sweetalert2.all.min.js"></script>
+  <footer>
+    &copy; 2024 <a href="privacy_policy.html">Fizzx Team</a>. All Rights Reserved.
+  </footer>
+
   <script>
-    // Menampilkan riwayat pesan
-    const historyContainer = document.getElementById("history");
-    const historyToggle = document.getElementById("history-toggle");
-    const historyClose = document.getElementById("history-close");
+    let messageHistory = [];
 
-    // Fungsi untuk menambah pesan ke history
-    function addMessageToHistory(name, message) {
-      const messageElement = document.createElement("div");
-      messageElement.innerHTML = `<strong>${name || "Anonim"}:</strong> ${message}`;
-      historyContainer.appendChild(messageElement);
-    }
-
-    // Menangani pengiriman form
-    document.getElementById("menfess-form").addEventListener("submit", function(event) {
+    document.getElementById('anonymousForm').addEventListener('submit', function(event) {
       event.preventDefault();
-      
-      const name = document.getElementById("name").value;
-      const message = document.getElementById("message").value;
 
-      // Menambahkan pesan ke history
-      addMessageToHistory(name, message);
+      const recipient = document.getElementById('recipient').value;
+      const phone = document.getElementById('phone').value;
+      const message = document.getElementById('message').value;
 
-      // Menampilkan SweetAlert2
-      Swal.fire({
-        title: 'Pesan Terkirim!',
-        text: 'Pesanmu telah berhasil dikirim!',
-        icon: 'success',
-        confirmButtonText: 'Tutup'
+      // Kirim data ke Formspree tanpa menyensor nomor telepon
+      fetch('https://formspree.io/f/xeoopdoe', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({
+          recipient: recipient,
+          phone: phone,
+          message: message
+        })
+      })
+      .then(response => {
+        if (response.ok) {
+          Swal.fire({
+            icon: 'success',
+            title: 'Message Sent',
+            text: `Your message to ${recipient} has been sent anonymously!`
+          });
+
+          // Menyimpan data riwayat pesan
+          messageHistory.push({
+            recipient: recipient,
+            phone: phone.replace(/(\d{6})(\d{4})/, '$1****'), // Hanya sensor di history
+            message: message
+          });
+
+          document.getElementById('anonymousForm').reset();
+        } else {
+          Swal.fire({
+            icon: 'error',
+            title: 'Submission Failed',
+            text: 'Please try again later.'
+          });
+        }
+      })
+      .catch(error => {
+        Swal.fire({
+          icon: 'error',
+          title: 'Error',
+          text: 'Something went wrong. Please try again later.'
+        });
       });
-
-      // Reset form
-      document.getElementById("menfess-form").reset();
     });
 
-    // Simpan riwayat ke localStorage
-    function saveHistoryToLocalStorage() {
-      const historyItems = historyContainer.querySelectorAll("div");
-      const historyArray = [];
-      historyItems.forEach(item => {
-        const name = item.querySelector("strong").textContent.split(":")[0].trim();
-        const message = item.textContent.split(":")[1].trim();
-        historyArray.push({ name, message });
-      });
-      localStorage.setItem("history", JSON.stringify(historyArray));
+    function viewHistory() {
+      let historyText = messageHistory.map((entry, index) => {
+        return `Message ${index + 1}:\nRecipient: ${entry.recipient}\nPhone: ${entry.phone}\nMessage: ${entry.message}\n\n`;
+      }).join('');
+
+      if (historyText) {
+        Swal.fire({
+          title: 'Message History',
+          text: historyText,
+          icon: 'info'
+        });
+      } else {
+        Swal.fire({
+          title: 'No History',
+          text: 'You have not sent any messages yet.',
+          icon: 'info'
+        });
+      }
     }
-
-    // Load riwayat dari localStorage
-    function loadHistoryFromLocalStorage() {
-      const historyArray = JSON.parse(localStorage.getItem("history")) || [];
-      historyArray.forEach(item => {
-        addMessageToHistory(item.name, item.message);
-      });
-    }
-
-    // Saat halaman dimuat, load riwayat
-    window.addEventListener("load", function() {
-      loadHistoryFromLocalStorage();
-    });
-
-    // Simpan history sebelum halaman ditutup
-    window.addEventListener("beforeunload", function() {
-      saveHistoryToLocalStorage();
-    });
-
-    // Tampilkan atau sembunyikan riwayat ketika ikon diklik
-    historyToggle.addEventListener("click", function() {
-      historyContainer.style.display = historyContainer.style.display === "none" || historyContainer.style.display === "" ? "block" : "none";
-    });
-
-    // Tutup riwayat dengan ikon silang
-    historyClose.addEventListener("click", function() {
-      historyContainer.style.display = "none";
-    });
   </script>
 </body>
 </html>
